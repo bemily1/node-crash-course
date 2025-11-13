@@ -7,11 +7,18 @@ const blogRoutes = require('./routes/blogRoutes');
 const app = express();
 
 // connect to mongodb & listen for requests
-const dbURI = "mongodb+srv://SDEV255:GmbnN6rUiMWcK7NT@testcluster.xh7xg.mongodb.net/node-tuts";
+const dbURI = "mongodb+srv://bemily1:kcEfN3MPyD4WnOSF@testcluster.xh7xg.mongodb.net/node-tuts?retryWrites=true&w=majority";
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => app.listen(3000))
-  .catch(err => console.log(err));
+mongoose.connect(dbURI)
+  .then(result => {
+    console.log('✅ Connected to MongoDB');
+    app.listen(3000, () => {
+      console.log('🚀 Server is listening on http://localhost:3000');
+    });
+  })
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+  });
 
 // register view engine
 app.set('view engine', 'ejs');
